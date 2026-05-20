@@ -1,0 +1,87 @@
+<section id="acciones">
+  <h2>Acciones CRUD</h2>
+
+  <form [formGroup]="formulario" class="formulario">
+    <div class="campo">
+      <label for="id">ID de tarea</label>
+      <input id="id" type="number" formControlName="id">
+    </div>
+
+    <div class="campo">
+      <label for="titulo">Título</label>
+      <input id="titulo" type="text" formControlName="titulo">
+    </div>
+
+    <div class="campo">
+      <label for="descripcion">Descripción</label>
+      <textarea id="descripcion" rows="3" formControlName="descripcion"></textarea>
+    </div>
+
+    <div class="campo">
+      <label for="categoriaId">ID de categoría</label>
+      <input id="categoriaId" type="number" formControlName="categoriaId">
+    </div>
+
+    <label class="checkbox">
+      <input type="checkbox" formControlName="completada">
+      Completada
+    </label>
+  </form>
+
+  <div class="botones">
+    <button type="button" (click)="mostrarTodas()">Mostrar todas las tareas</button>
+    <button type="button" (click)="mostrarPorId()">Mostrar tarea por ID</button>
+    <button type="button" (click)="crear()">Crear tarea</button>
+    <button type="button" (click)="actualizar()">Actualizar tarea</button>
+    <button type="button" (click)="borrar()">Borrar tarea por ID</button>
+  </div>
+
+  <div id="resultado">
+    @if (cargando()) {
+      <p>Cargando...</p>
+    }
+
+    @if (mensaje()) {
+      <p class="mensaje">{{ mensaje() }}</p>
+    }
+
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+
+    <p>
+      Total de tareas cargadas: {{ totalTareas() }} |
+      Completadas: {{ tareasCompletadas() }}
+    </p>
+
+    @if (tareaSeleccionada()) {
+      <h3>Tarea seleccionada</h3>
+
+      <article class="tarjeta">
+        <h4>{{ tareaSeleccionada()?.titulo }}</h4>
+        <p>{{ tareaSeleccionada()?.descripcion }}</p>
+        <p>Completada: {{ tareaSeleccionada()?.completada ? 'Sí' : 'No' }}</p>
+        <p>Categoría: {{ tareaSeleccionada()?.categoria?.nombre || tareaSeleccionada()?.categoria?.id }}</p>
+      </article>
+    }
+
+    @if (tareas().length > 0) {
+      <h3>Listado de tareas</h3>
+
+      <div class="lista">
+        @for (tarea of tareas(); track tarea.id) {
+          <article class="tarjeta">
+            <h4>{{ tarea.titulo }}</h4>
+            <p>{{ tarea.descripcion }}</p>
+            <p>Completada: {{ tarea.completada ? 'Sí' : 'No' }}</p>
+            <p>Categoría: {{ tarea.categoria.nombre || tarea.categoria.id }}</p>
+
+            <button type="button" (click)="cargarEnFormulario(tarea)">
+              Cargar en formulario
+            </button>
+          </article>
+        }
+      </div>
+    }
+  </div>
+</section>

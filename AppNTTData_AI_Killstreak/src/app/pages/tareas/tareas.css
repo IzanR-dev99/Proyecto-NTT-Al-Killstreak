@@ -1,0 +1,54 @@
+#resultado {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 5px;
+}
+
+.formulario {
+    display: grid;
+    gap: 0.8rem;
+    max-width: 500px;
+    margin-bottom: 1rem;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.botones {
+    margin-bottom: 1rem;
+}
+
+.lista {
+    display: grid;
+    gap: 1rem;
+}
+
+.tarjeta {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 1rem;
+    background: #fafafa;
+}
+
+.tarjeta h4 {
+    margin-top: 0;
+}
+
+.mensaje {
+    color: #0f766e;
+    font-weight: bold;
+}
+
+.error {
+    color: #dc2626;
+    font-weight: bold;
+}
