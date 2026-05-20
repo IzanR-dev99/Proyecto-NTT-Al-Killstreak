@@ -1,0 +1,120 @@
+izanp@Izan-PC MINGW64 ~/Desktop/NTT/Fron-Proyecto_NTT (front_end)
+$ ng serve
+Application bundle generation failed. [1.012 seconds] - 2026-05-20T10:44:22.635Z
+
+X [ERROR] TS2792: Cannot find module '@angular/core'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option? [plugin angular-compiler]
+
+    src/app/app.config.ts:2:34:
+      2 │ import { ApplicationConfig } from '@angular/core';
+        ╵                                   ~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2792: Cannot find module '@angular/router'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option? [plugin angular-compiler]
+
+    src/app/app.config.ts:3:30:
+      3 │ import { provideRouter } from '@angular/router';
+        ╵                               ~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2792: Cannot find module '@angular/common/http'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option? [plugin angular-compiler]
+
+    src/app/app.config.ts:4:45:
+      4 │ import { provideHttpClient, withFetch } from '@angular/common/http';
+        ╵                                              ~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2792: Cannot find module '@angular/router'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option? [plugin angular-compiler]
+
+    src/app/app.routes.ts:1:23:
+      1 │ import { Routes } from '@angular/router';
+        ╵                        ~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2792: Cannot find module '@angular/core'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option? [plugin angular-compiler]
+
+    src/app/app.ts:1:34:
+      1 │ import { Component, signal } from '@angular/core';
+        ╵                                   ~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2792: Cannot find module '@angular/router'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option? [plugin angular-compiler]
+
+    src/app/app.ts:2:29:
+      2 │ import { RouterOutlet } from '@angular/router';
+        ╵                              ~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2354: This syntax requires an imported helper but module 'tslib' cannot be found. [plugin angular-compiler]
+
+    src/app/app.ts:4:0:
+      4 │ @Component({
+        ╵ ~~~~~~~~~~~~
+
+
+X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/app.ts:6:12:
+      6 │   imports: [RouterOutlet],
+        ╵             ~~~~~~~~~~~~
+
+  Unknown reference.
+
+    src/app/app.ts:6:12:
+      6 │   imports: [RouterOutlet],
+        ╵             ~~~~~~~~~~~~
+
+
+X [ERROR] TS2792: Cannot find module '@angular/core'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option? [plugin angular-compiler]
+
+    src/app/pages/tarea-form/tarea-form.ts:1:26:
+      1 │ import { Component } from '@angular/core';
+        ╵                           ~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2354: This syntax requires an imported helper but module 'tslib' cannot be found. [plugin angular-compiler]
+
+    src/app/pages/tarea-form/tarea-form.ts:3:0:
+      3 │ @Component({
+        ╵ ~~~~~~~~~~~~
+
+
+X [ERROR] TS2792: Cannot find module '@angular/core'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option? [plugin angular-compiler]
+
+    src/app/pages/tareas/tareas.ts:1:26:
+      1 │ import { Component } from '@angular/core';
+        ╵                           ~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2354: This syntax requires an imported helper but module 'tslib' cannot be found. [plugin angular-compiler]
+
+    src/app/pages/tareas/tareas.ts:3:0:
+      3 │ @Component({
+        ╵ ~~~~~~~~~~~~
+
+
+X [ERROR] TS2792: Cannot find module '@angular/core'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option? [plugin angular-compiler]
+
+    src/app/services/tarea-api.ts:1:27:
+      1 │ import { Injectable } from '@angular/core';
+        ╵                            ~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2354: This syntax requires an imported helper but module 'tslib' cannot be found. [plugin angular-compiler]
+
+    src/app/services/tarea-api.ts:3:0:
+      3 │ @Injectable({
+        ╵ ~~~~~~~~~~~~~
+
+
+X [ERROR] TS2792: Cannot find module '@angular/platform-browser'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option? [plugin angular-compiler]
+
+    src/main.ts:1:37:
+      1 │ import { bootstrapApplication } from '@angular/platform-browser';
+        ╵                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS7006: Parameter 'err' implicitly has an 'any' type. [plugin angular-compiler]
+
+    src/main.ts:6:10:
+      6 │   .catch((err) => console.error(err));
