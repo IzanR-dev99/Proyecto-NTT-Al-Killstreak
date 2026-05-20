@@ -3,6 +3,7 @@
 
 [cite_start]Este repositorio contiene el proyecto integrador de desarrollo web *Full Stack* desarrollado para el ciclo de FP Dual en colaboración con NTT Data[cite: 1, 3, 63]. [cite_start]La aplicación es un gestor de tareas que permite clasificar, crear, actualizar y eliminar registros basándose en una relación de uno a muchos (1:M) entre categorías y tareas[cite: 5, 37, 40].
 
+No tener en cuenta esta rama, cada cosa esta en su respectiva rama
 [cite_start]El proyecto está estructurado de forma modular y separada por responsabilidades[cite: 14]:
 - [cite_start]`/backend`: API REST construida con Java y Spring Boot[cite: 7, 35, 56].
 - [cite_start]`/frontend`: Interfaz de usuario SPA desarrollada con Angular 21[cite: 26, 55].
