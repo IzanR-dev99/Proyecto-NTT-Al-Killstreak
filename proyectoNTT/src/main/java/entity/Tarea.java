@@ -67,7 +67,7 @@ public class Tarea {
         this.completada = completada;
     }
 
-    public String getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
