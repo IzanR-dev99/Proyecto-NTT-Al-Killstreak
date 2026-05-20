@@ -4,9 +4,9 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "rootDir": "./src",
-    "module": "ES2020",
-    "types": []
+    "types": [
+      "node"
+    ]
   },
   "include": [
     "src/**/*.ts"

@@ -8,5 +8,5 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('Fron-Proyecto_NTT');
+  protected readonly title = signal('AppNTTData_AI_Killstreak');
 }

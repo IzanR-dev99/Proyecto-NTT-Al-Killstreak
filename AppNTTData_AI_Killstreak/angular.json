@@ -2,12 +2,11 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm",
-    "analytics": "6893799b-bb08-485e-91d7-4ea9110288fd"
+    "packageManager": "npm"
   },
   "newProjectRoot": "projects",
   "projects": {
-    "Fron-Proyecto_NTT": {
+    "AppNTTData_AI_Killstreak": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -27,7 +26,15 @@
             ],
             "styles": [
               "src/styles.css"
-            ]
+            ],
+            "server": "src/main.server.ts",
+            "outputMode": "server",
+            "security": {
+              "allowedHosts": []
+            },
+            "ssr": {
+              "entry": "src/server.ts"
+            }
           },
           "configurations": {
             "production": {
@@ -57,10 +64,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "Fron-Proyecto_NTT:build:production"
+              "buildTarget": "AppNTTData_AI_Killstreak:build:production"
             },
             "development": {
-              "buildTarget": "Fron-Proyecto_NTT:build:development"
+              "buildTarget": "AppNTTData_AI_Killstreak:build:development"
             }
           },
           "defaultConfiguration": "development"
