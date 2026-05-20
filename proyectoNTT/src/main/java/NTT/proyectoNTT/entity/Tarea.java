@@ -15,14 +15,16 @@ public class Tarea {
     private String titulo;
     private String descripcion;
     private boolean completada;
+    private Usuario propietario;
 
     public Tarea() {
     }
 
-    public Tarea(String titulo, String descripcion, boolean completada) {
+    public Tarea(String titulo, String descripcion, boolean completada, Usuario propietario) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.completada = completada;
+        this.propietario = propietario;
     }
 
     public Long getId() {
@@ -55,5 +57,13 @@ public class Tarea {
 
     public void setCompletada(boolean completada) {
         this.completada = completada;
+    }
+
+    public String getUsuario() {
+        return propietario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.propietario = usuario;
     }
 }
