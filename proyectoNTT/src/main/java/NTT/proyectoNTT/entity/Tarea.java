@@ -1,9 +1,14 @@
 package NTT.proyectoNTT.entity;
 
+
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Tarea {
@@ -12,19 +17,24 @@ public class Tarea {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "titulo", nullable = "false")
     private String titulo;
+    @Column(name = "descripcion")
     private String descripcion;
+    @Column(name = "completada")
     private boolean completada;
-    private Usuario propietario;
+    @ManyToOne
+    @JoinColumn(name="categoria_id", nullable= false)
+    private Categoria categoria;
 
     public Tarea() {
     }
 
-    public Tarea(String titulo, String descripcion, boolean completada, Usuario propietario) {
+    public Tarea(String titulo, String descripcion, boolean completada, Categoria categoria) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.completada = completada;
-        this.propietario = propietario;
+        this.categoria = categoria;
     }
 
     public Long getId() {
@@ -59,11 +69,11 @@ public class Tarea {
         this.completada = completada;
     }
 
-    public String getUsuario() {
-        return propietario;
+    public String getCategoria() {
+        return categoria;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.propietario = usuario;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }
