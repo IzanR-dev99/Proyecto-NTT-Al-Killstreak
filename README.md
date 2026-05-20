@@ -24,6 +24,7 @@ El diseño lógico consta de dos tablas principales unidas por una clave foráne
 
 ## 📊 Script SQL de Inicialización y Poblado de Datos
 Para disponer de registros de prueba inmediatamente tras el arranque de la aplicación, el sistema lee automáticamente la configuración de datos de ejemplo (`import.sql` o `data.sql`)[cite: 58]:
+Se encuentra en la siguiente ruta: Proyecto-NTT-Al-Killstreak/proyectoNTT/src/main/resources
 
 ```sql
 -- Inserción de Categorías de ejemplo
