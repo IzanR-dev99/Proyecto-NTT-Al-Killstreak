@@ -1,1 +1,0 @@
-# Proyecto-NTT-Al-Killstreak
