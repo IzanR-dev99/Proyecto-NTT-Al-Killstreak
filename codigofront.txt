@@ -1,0 +1,699 @@
+6. Ahora el frontend Angular desde cero
+
+Dentro del proyecto Angular, crea esta estructura:
+
+src/app/
+├── models/
+│   └── tarea.ts
+├── services/
+│   └── tarea-api.ts
+├── pages/
+│   ├── inicio/
+│   │   ├── inicio.ts
+│   │   ├── inicio.html
+│   │   └── inicio.css
+│   └── tareas/
+│       ├── tareas.ts
+│       ├── tareas.html
+│       └── tareas.css
+├── app.config.ts
+├── app.routes.ts
+├── app.ts
+├── app.html
+└── app.css
+
+Puedes crear los componentes con:
+
+ng generate component pages/inicio --standalone
+ng generate component pages/tareas --standalone
+ng generate service services/tarea-api
+
+La carpeta models créala manualmente:
+
+mkdir src/app/models
+7. Modelo Angular
+
+Crea:
+
+src/app/models/tarea.ts
+export interface Categoria {
+  id: number;
+  nombre?: string;
+}
+
+export interface Tarea {
+  id?: number;
+  titulo: string;
+  descripcion: string;
+  completada: boolean;
+  categoria: Categoria;
+}
+8. Servicio Angular para llamar al backend
+
+Abre:
+
+src/app/services/tarea-api.ts
+
+Pon esto:
+
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Tarea } from '../models/tarea';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class TareaApi {
+  private readonly apiUrl = 'http://localhost:8080/tareas';
+
+  constructor(private http: HttpClient) {}
+
+  getAll(): Observable<Tarea[]> {
+    return this.http.get<Tarea[]>(this.apiUrl);
+  }
+
+  getById(id: number): Observable<Tarea> {
+    return this.http.get<Tarea>(`${this.apiUrl}/${id}`);
+  }
+
+  create(tarea: Tarea): Observable<Tarea> {
+    return this.http.post<Tarea>(this.apiUrl, tarea);
+  }
+
+  update(id: number, tarea: Tarea): Observable<Tarea> {
+    return this.http.put<Tarea>(`${this.apiUrl}/${id}`, tarea);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+}
+9. Configurar HttpClient
+
+Abre:
+
+src/app/app.config.ts
+
+Pon esto:
+
+import { ApplicationConfig } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+
+import { routes } from './app.routes';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideRouter(routes),
+    provideHttpClient(withFetch())
+  ]
+};
+10. Rutas básicas
+
+Abre:
+
+src/app/app.routes.ts
+
+Pon esto:
+
+import { Routes } from '@angular/router';
+import { Inicio } from './pages/inicio/inicio';
+import { Tareas } from './pages/tareas/tareas';
+
+export const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'inicio',
+    pathMatch: 'full'
+  },
+  {
+    path: 'inicio',
+    component: Inicio
+  },
+  {
+    path: 'tareas',
+    component: Tareas
+  },
+  {
+    path: '**',
+    redirectTo: 'inicio'
+  }
+];
+
+Si Angular te generó clases llamadas InicioComponent o TareasComponent, cambia los imports así:
+
+import { InicioComponent } from './pages/inicio/inicio';
+import { TareasComponent } from './pages/tareas/tareas';
+
+y en las rutas usa esos nombres.
+
+11. Componente principal usando tu HTML
+
+Abre:
+
+src/app/app.html
+
+Pon esto:
+
+<header>
+  <h1>Gestión de Tareas</h1>
+
+  <nav>
+    <a routerLink="/inicio">Inicio</a>
+    <a routerLink="/tareas">Tareas</a>
+  </nav>
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<footer>
+  <p>Proyecto NTT Data</p>
+</footer>
+
+Abre:
+
+src/app/app.ts
+
+Pon esto:
+
+import { Component } from '@angular/core';
+import { RouterLink, RouterOutlet } from '@angular/router';
+
+@Component({
+  selector: 'app-root',
+  imports: [RouterOutlet, RouterLink],
+  templateUrl: './app.html',
+  styleUrl: './app.css'
+})
+export class App {
+}
+12. CSS principal usando tu CSS
+
+Abre:
+
+src/app/app.css
+
+Pon esto:
+
+:host {
+    display: block;
+}
+
+header {
+    background: #333;
+    color: white;
+    padding: 1rem;
+}
+
+nav a {
+    color: white;
+    margin-right: 1rem;
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 2rem;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
+
+Y en:
+
+src/styles.css
+
+pon esto:
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+}
+
+button {
+    padding: 0.5rem 1rem;
+    background: #007bff;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+button:disabled {
+    background: #999;
+    cursor: not-allowed;
+}
+
+input,
+textarea,
+select {
+    padding: 0.5rem;
+    margin-bottom: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font: inherit;
+}
+
+label {
+    font-weight: bold;
+}
+13. Página de inicio
+
+Abre:
+
+src/app/pages/inicio/inicio.html
+<section id="resultado">
+  <h2>Inicio</h2>
+  <p>Aplicación Angular conectada a backend Spring Boot con H2 en memoria.</p>
+  <p>Usa el menú superior para ir a la gestión de tareas.</p>
+</section>
+
+Abre:
+
+src/app/pages/inicio/inicio.css
+#resultado {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 5px;
+}
+14. Página de tareas con Signals, Reactive Forms y CRUD
+
+Abre:
+
+src/app/pages/tareas/tareas.ts
+
+Pon esto:
+
+import { Component, computed, signal } from '@angular/core';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { TareaApi } from '../../services/tarea-api';
+import { Tarea } from '../../models/tarea';
+
+@Component({
+  selector: 'app-tareas',
+  imports: [ReactiveFormsModule],
+  templateUrl: './tareas.html',
+  styleUrl: './tareas.css'
+})
+export class Tareas {
+  tareas = signal<Tarea[]>([]);
+  tareaSeleccionada = signal<Tarea | null>(null);
+  mensaje = signal<string>('');
+  error = signal<string>('');
+  cargando = signal<boolean>(false);
+
+  totalTareas = computed(() => this.tareas().length);
+
+  tareasCompletadas = computed(() =>
+    this.tareas().filter(tarea => tarea.completada).length
+  );
+
+  formulario = this.fb.nonNullable.group({
+    id: [1, [Validators.required]],
+    titulo: ['', [Validators.required, Validators.minLength(3)]],
+    descripcion: [''],
+    completada: [false],
+    categoriaId: [1, [Validators.required]]
+  });
+
+  constructor(
+    private fb: FormBuilder,
+    private tareaApi: TareaApi
+  ) {}
+
+  mostrarTodas(): void {
+    this.cargando.set(true);
+    this.error.set('');
+    this.mensaje.set('');
+    this.tareaSeleccionada.set(null);
+
+    this.tareaApi.getAll().subscribe({
+      next: (tareas) => {
+        this.tareas.set(tareas);
+        this.mensaje.set('Tareas cargadas correctamente.');
+        this.cargando.set(false);
+      },
+      error: () => {
+        this.error.set('Error al cargar las tareas.');
+        this.cargando.set(false);
+      }
+    });
+  }
+
+  mostrarPorId(): void {
+    const id = this.formulario.controls.id.value;
+
+    this.cargando.set(true);
+    this.error.set('');
+    this.mensaje.set('');
+
+    this.tareaApi.getById(id).subscribe({
+      next: (tarea) => {
+        this.tareaSeleccionada.set(tarea);
+        this.mensaje.set(`Tarea con ID ${id} encontrada.`);
+        this.cargando.set(false);
+      },
+      error: () => {
+        this.tareaSeleccionada.set(null);
+        this.error.set(`No existe ninguna tarea con ID ${id}.`);
+        this.cargando.set(false);
+      }
+    });
+  }
+
+  crear(): void {
+    if (this.formulario.invalid) {
+      this.formulario.markAllAsTouched();
+      this.error.set('Revisa los campos del formulario.');
+      return;
+    }
+
+    const datos = this.formulario.getRawValue();
+
+    const nuevaTarea: Tarea = {
+      titulo: datos.titulo,
+      descripcion: datos.descripcion,
+      completada: datos.completada,
+      categoria: {
+        id: datos.categoriaId
+      }
+    };
+
+    this.cargando.set(true);
+    this.error.set('');
+    this.mensaje.set('');
+
+    this.tareaApi.create(nuevaTarea).subscribe({
+      next: (tareaCreada) => {
+        this.mensaje.set(`Tarea creada con ID ${tareaCreada.id}.`);
+        this.cargando.set(false);
+        this.mostrarTodas();
+      },
+      error: () => {
+        this.error.set('No se pudo crear la tarea. Revisa que exista la categoría indicada.');
+        this.cargando.set(false);
+      }
+    });
+  }
+
+  actualizar(): void {
+    if (this.formulario.invalid) {
+      this.formulario.markAllAsTouched();
+      this.error.set('Revisa los campos del formulario.');
+      return;
+    }
+
+    const datos = this.formulario.getRawValue();
+
+    const tareaActualizada: Tarea = {
+      id: datos.id,
+      titulo: datos.titulo,
+      descripcion: datos.descripcion,
+      completada: datos.completada,
+      categoria: {
+        id: datos.categoriaId
+      }
+    };
+
+    this.cargando.set(true);
+    this.error.set('');
+    this.mensaje.set('');
+
+    this.tareaApi.update(datos.id, tareaActualizada).subscribe({
+      next: () => {
+        this.mensaje.set(`Tarea con ID ${datos.id} actualizada.`);
+        this.cargando.set(false);
+        this.mostrarTodas();
+      },
+      error: () => {
+        this.error.set(`No se pudo actualizar la tarea con ID ${datos.id}.`);
+        this.cargando.set(false);
+      }
+    });
+  }
+
+  borrar(): void {
+    const id = this.formulario.controls.id.value;
+
+    this.cargando.set(true);
+    this.error.set('');
+    this.mensaje.set('');
+
+    this.tareaApi.delete(id).subscribe({
+      next: () => {
+        this.mensaje.set(`Tarea con ID ${id} borrada.`);
+        this.tareaSeleccionada.set(null);
+        this.tareas.update(tareasActuales =>
+          tareasActuales.filter(tarea => tarea.id !== id)
+        );
+        this.cargando.set(false);
+      },
+      error: () => {
+        this.error.set(`No se pudo borrar la tarea con ID ${id}.`);
+        this.cargando.set(false);
+      }
+    });
+  }
+
+  cargarEnFormulario(tarea: Tarea): void {
+    this.formulario.patchValue({
+      id: tarea.id ?? 1,
+      titulo: tarea.titulo,
+      descripcion: tarea.descripcion,
+      completada: tarea.completada,
+      categoriaId: tarea.categoria.id
+    });
+  }
+}
+15. HTML de tareas usando tu diseño
+
+Abre:
+
+src/app/pages/tareas/tareas.html
+
+Pon esto:
+
+<section id="acciones">
+  <h2>Acciones CRUD</h2>
+
+  <form [formGroup]="formulario" class="formulario">
+    <div class="campo">
+      <label for="id">ID de tarea</label>
+      <input id="id" type="number" formControlName="id">
+    </div>
+
+    <div class="campo">
+      <label for="titulo">Título</label>
+      <input id="titulo" type="text" formControlName="titulo">
+    </div>
+
+    <div class="campo">
+      <label for="descripcion">Descripción</label>
+      <textarea id="descripcion" rows="3" formControlName="descripcion"></textarea>
+    </div>
+
+    <div class="campo">
+      <label for="categoriaId">ID de categoría</label>
+      <input id="categoriaId" type="number" formControlName="categoriaId">
+    </div>
+
+    <label class="checkbox">
+      <input type="checkbox" formControlName="completada">
+      Completada
+    </label>
+  </form>
+
+  <div class="botones">
+    <button type="button" (click)="mostrarTodas()">Mostrar todas las tareas</button>
+    <button type="button" (click)="mostrarPorId()">Mostrar tarea por ID</button>
+    <button type="button" (click)="crear()">Crear tarea</button>
+    <button type="button" (click)="actualizar()">Actualizar tarea</button>
+    <button type="button" (click)="borrar()">Borrar tarea por ID</button>
+  </div>
+
+  <div id="resultado">
+    @if (cargando()) {
+      <p>Cargando...</p>
+    }
+
+    @if (mensaje()) {
+      <p class="mensaje">{{ mensaje() }}</p>
+    }
+
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+
+    <p>
+      Total de tareas cargadas: {{ totalTareas() }} |
+      Completadas: {{ tareasCompletadas() }}
+    </p>
+
+    @if (tareaSeleccionada()) {
+      <h3>Tarea seleccionada</h3>
+
+      <article class="tarjeta">
+        <h4>{{ tareaSeleccionada()?.titulo }}</h4>
+        <p>{{ tareaSeleccionada()?.descripcion }}</p>
+        <p>Completada: {{ tareaSeleccionada()?.completada ? 'Sí' : 'No' }}</p>
+        <p>Categoría: {{ tareaSeleccionada()?.categoria?.nombre || tareaSeleccionada()?.categoria?.id }}</p>
+      </article>
+    }
+
+    @if (tareas().length > 0) {
+      <h3>Listado de tareas</h3>
+
+      <div class="lista">
+        @for (tarea of tareas(); track tarea.id) {
+          <article class="tarjeta">
+            <h4>{{ tarea.titulo }}</h4>
+            <p>{{ tarea.descripcion }}</p>
+            <p>Completada: {{ tarea.completada ? 'Sí' : 'No' }}</p>
+            <p>Categoría: {{ tarea.categoria.nombre || tarea.categoria.id }}</p>
+
+            <button type="button" (click)="cargarEnFormulario(tarea)">
+              Cargar en formulario
+            </button>
+          </article>
+        }
+      </div>
+    }
+  </div>
+</section>
+16. CSS de tareas usando tu estilo
+
+Abre:
+
+src/app/pages/tareas/tareas.css
+
+Pon esto:
+
+#resultado {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 5px;
+}
+
+.formulario {
+    display: grid;
+    gap: 0.8rem;
+    max-width: 500px;
+    margin-bottom: 1rem;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.botones {
+    margin-bottom: 1rem;
+}
+
+.lista {
+    display: grid;
+    gap: 1rem;
+}
+
+.tarjeta {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 1rem;
+    background: #fafafa;
+}
+
+.tarjeta h4 {
+    margin-top: 0;
+}
+
+.mensaje {
+    color: #0f766e;
+    font-weight: bold;
+}
+
+.error {
+    color: #dc2626;
+    font-weight: bold;
+}
+17. Revisa main.ts
+
+Abre:
+
+src/main.ts
+
+Debe quedar así:
+
+import { bootstrapApplication } from '@angular/platform-browser';
+import { appConfig } from './app/app.config';
+import { App } from './app/app';
+
+bootstrapApplication(App, appConfig)
+  .catch((err: unknown) => console.error(err));
+18. Cómo probarlo
+
+Primero arranca el backend Spring Boot:
+
+mvnw.cmd spring-boot:run
+
+Backend:
+
+http://localhost:8080
+
+H2 Console:
+
+http://localhost:8080/h2-console
+
+Datos de H2:
+
+JDBC URL: jdbc:h2:mem:testdb
+User Name: sa
+Password:
+
+Luego arranca Angular:
+
+ng serve
+
+Frontend:
+
+http://localhost:4200
+19. JSON que Angular enviará al backend
+
+Cuando crees o actualices una tarea, Angular enviará algo así:
+
+{
+  "titulo": "Nueva tarea",
+  "descripcion": "Descripción de prueba",
+  "completada": false,
+  "categoria": {
+    "id": 1
+  }
+}
+
+Eso encaja con tu controlador porque tú recibes directamente:
+
+@RequestBody Tarea tarea
+
+y no un categoriaId suelto.
